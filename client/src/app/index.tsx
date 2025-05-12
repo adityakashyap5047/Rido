@@ -3,6 +3,7 @@ import React from 'react'
 import { useFonts } from 'expo-font'
 import { commonStyles } from '@/styles/commonStyles'
 import { splashStyles } from '@/styles/splashStyles'
+import CustomText from '@/components/shared/CustomText'
 
 const Main = () => {
 
@@ -20,7 +21,7 @@ const Main = () => {
         source={require("@/assets/images/logo_t.png")}
         style={splashStyles.img}
       />
-      <Text>Congratulations!!! You Successfully Run the app</Text>
+      <CustomText variant='h6' fontFamily="Medium" style={splashStyles.text}>Congratulations!!! You Successfully Run the app</CustomText>
     </View>
   )
 }
