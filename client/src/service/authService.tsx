@@ -4,7 +4,10 @@ import { useUserStore } from "@/store/userStore"
 import { resetAndNavigate } from "@/utils/Helpers";
 
 
-export const logout = async () => {
+export const logout = async (disconnect?: () => void) => {
+    if (disconnect) {
+        disconnect();
+    }
     const {clearData} = useUserStore.getState();
     const {clearRiderData} = useRiderStore.getState();
 
