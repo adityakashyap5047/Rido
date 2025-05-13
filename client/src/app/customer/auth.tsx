@@ -1,4 +1,4 @@
-import { View, SafeAreaView, ScrollView, Image, TouchableOpacity} from 'react-native'
+import { View, SafeAreaView, ScrollView, Image, TouchableOpacity, Alert} from 'react-native'
 import React, { useState } from 'react'
 import { authStyles } from '@/styles/authStyles'
 import { commonStyles } from '@/styles/commonStyles'
@@ -6,6 +6,8 @@ import CustomText from '@/components/shared/CustomText'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import PhoneInput from '@/components/shared/PhoneInput'
 import { useWS } from '@/service/WSProvider'
+import CustomButton from '@/components/shared/CustomButton'
+import { signin } from '@/service/authService'
 
 const Auth = () => {
 
@@ -13,7 +15,12 @@ const Auth = () => {
   const [phone, setPhone] = useState("");
 
   const handleNext = async() => {
+    if (!phone && phone.length !== 10) {
+      Alert.alert("Error", "Please enter a valid phone number");
+      return;
+    }
 
+    signin({role: 'customer', phone}, updateAccessToken)
   }
 
   return (
