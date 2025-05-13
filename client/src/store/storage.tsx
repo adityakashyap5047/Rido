@@ -1,7 +1,7 @@
 import {MMKV} from 'react-native-mmkv'
 
 export const tokenStorage = new MMKV({
-    id: 'tokenStorage',
+    id: 'token-storage',
     encryptionKey: 'SOME-RANDOM-SUPER-SECRECT-KEY',
 })
 
