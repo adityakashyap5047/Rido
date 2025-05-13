@@ -12,6 +12,10 @@ const Auth = () => {
   const {updateAccessToken} = useWS();
   const [phone, setPhone] = useState("");
 
+  const handleNext = async() => {
+
+  }
+
   return (
     <SafeAreaView style={authStyles.container}>
       <ScrollView contentContainerStyle={authStyles.container}>
@@ -35,6 +39,23 @@ const Auth = () => {
 
         <PhoneInput onChangeText={setPhone} value={phone}/>
       </ScrollView>
+
+      <View style={authStyles.footerContainer}>
+        <CustomText 
+          variant='h8'
+          fontFamily='Regular'
+          style={[commonStyles.lightText, {textAlign: 'center', marginHorizontal: 20}]}
+        >
+          By continuing, you agree to our Terms of Service and Privacy Policy.
+        </CustomText>
+
+        <CustomButton 
+          title="Next"
+          onPress={handleNext}
+          loading={false}
+          disabled={phone.length !== 10}
+        />
+      </View>
     </SafeAreaView>
   )
 }
