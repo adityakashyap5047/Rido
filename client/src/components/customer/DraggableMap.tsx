@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { FC, memo, useEffect, useRef, useState } from 'react'
 import { useIsFocused } from '@react-navigation/native'
-import MapView, { Region } from 'react-native-maps'
+import MapView, { Marker, Region } from 'react-native-maps'
 import { useUserStore } from '@/store/userStore'
 import { useWS } from '@/service/WSProvider'
 import { customMapStyle, indiaIntialRegion } from '@/utils/CustomMap'
@@ -55,6 +55,31 @@ const DraggableMap: FC<{height: number}> = ({ height }) => {
             }
         })()
     }, [isFocused, mapRef])
+
+    const generateRandomMarkers = () => {
+        if(!location?.latitude || !location?.longitude || outOfRange) return;
+
+        const types = ["bike", "auto", "cab"]
+        const newMarkers = Array.from({length: 20}, (_, index) => {
+            const randomType = types[Math.floor(Math.random() * types.length)]
+            const randomRotation = Math.floor(Math.random() * 360)
+
+            return{
+                id: index,
+                latitude: location?.latitude + (Math.random() - 0.5) * 0.01,
+                longitude: location?.longitude + (Math.random() - 0.5) * 0.01,
+                type: randomType,
+                rotation: randomRotation,
+                visible: true
+            }
+        });
+
+        setMarkers(newMarkers);
+    }
+
+    useEffect(() => {
+        generateRandomMarkers();
+    }, [location])
 
     const handleRegionChange = async(newRegion: Region) => {
         const address = await reverseGeocode(
@@ -110,7 +135,7 @@ const DraggableMap: FC<{height: number}> = ({ height }) => {
 
   return (
     <View style={{height: height, width: '100%'}}>
-      <MapView
+    <MapView
         ref={mapRef}
         maxZoomLevel={16}
         minZoomLevel={12}
@@ -127,7 +152,27 @@ const DraggableMap: FC<{height: number}> = ({ height }) => {
         showsBuildings={false}
         customMapStyle={customMapStyle}
         showsUserLocation={true}
-      >
+    >
+        {
+            markers?.filter((marker: any)=>marker?.latitude && marker?.longitude && marker.visible)
+                .map((
+                    marker: any, index: number
+                ) => (
+                    <Marker key={index} zIndex={index+1} flat anchor={{x: 0.5, y: 0.5}} coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
+                        <View style={{transform: [{rotate: `${marker?.rotation}deg`}]}}>
+                            <Image
+                                source={
+                                    marker.type === "bike"
+                                        ? require("@/assets/icons/bike_marker.png")
+                                        : marker.type === "auto"
+                                        ? require("@/assets/icons/auto_marker.png")
+                                        : require("@/assets/icons/cab_marker.png")
+                                }
+                            />
+                        </View>
+                    </Marker>
+            ))
+        }
     </MapView>
     <View style={mapStyles.centerMarkerContainer}>
         <Image source={require("@/assets/icons/marker.png")} style={mapStyles.marker}/>
