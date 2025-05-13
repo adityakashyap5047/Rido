@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React, { FC, memo, useRef, useState } from 'react'
+import React, { FC, memo, useEffect, useRef, useState } from 'react'
 import { useIsFocused } from '@react-navigation/native'
 import MapView, { Region } from 'react-native-maps'
 import { useUserStore } from '@/store/userStore'
@@ -20,6 +20,41 @@ const DraggableMap: FC<{height: number}> = ({ height }) => {
     const {setLocation, location, outOfRange, setOutOfRange} = useUserStore()
     const {emit, on, off} = useWS()
     const MAX_DISTANCE_THRESHOLD = 10000
+
+    useEffect(() => {
+        (async() => {
+            if(isFocused){
+                const {status} = await Location.requestForegroundPermissionsAsync();
+                if(status === "granted"){
+                    try{
+                        const location = await Location.getCurrentPositionAsync({})
+                        const {latitude, longitude} = location.coords;
+                        mapRef.current?.fitToCoordinates([{latitude, longitude}], {
+                            edgePadding: {
+                                top: 50,
+                                right: 50,
+                                bottom: 50,
+                                left: 50,
+                            },
+                            animated: true,
+                        }) 
+                        const newRegion = {
+                            latitude,
+                            longitude,
+                            latitudeDelta: 0.05,
+                            longitudeDelta: 0.05,
+                        }
+
+                        handleRegionChange(newRegion)
+                    } catch (error) {
+                        console.error('Error getting current location', error);
+                    }
+                } else {
+                    console.log('Location permission not granted');
+                }
+            }
+        })()
+    }, [isFocused, mapRef])
 
     const handleRegionChange = async(newRegion: Region) => {
         const address = await reverseGeocode(
@@ -51,6 +86,10 @@ const DraggableMap: FC<{height: number}> = ({ height }) => {
     const handleGpsButtonPress = async() => {
         try{
             const {status} = await Location.requestForegroundPermissionsAsync();
+            if(status !== "granted"){
+                console.log('Location permission not granted');
+                return;
+            }
             const location = await Location.getCurrentPositionAsync({})
             const {latitude, longitude} = location.coords;
             mapRef.current?.fitToCoordinates([{latitude, longitude}], {
