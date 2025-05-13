@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { router } from 'expo-router'
 import { roleStyles } from '@/styles/roleStyles'
