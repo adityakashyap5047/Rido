@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "./config";
 import { tokenStorage } from "@/store/storage";
+import { logout } from "./authService";
 
 export const refresh_token = async () => {
     try {
