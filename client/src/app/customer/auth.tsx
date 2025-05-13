@@ -1,11 +1,17 @@
 import { View, SafeAreaView, ScrollView, Image, TouchableOpacity} from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { authStyles } from '@/styles/authStyles'
 import { commonStyles } from '@/styles/commonStyles'
 import CustomText from '@/components/shared/CustomText'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import PhoneInput from '@/components/shared/PhoneInput'
+import { useWS } from '@/service/WSProvider'
 
 const Auth = () => {
+
+  const {updateAccessToken} = useWS();
+  const [phone, setPhone] = useState("");
+
   return (
     <SafeAreaView style={authStyles.container}>
       <ScrollView contentContainerStyle={authStyles.container}>
@@ -27,7 +33,7 @@ const Auth = () => {
           Enter your Phone No. to Proceed
         </CustomText>
 
-        
+        <PhoneInput onChangeText={setPhone} value={phone}/>
       </ScrollView>
     </SafeAreaView>
   )

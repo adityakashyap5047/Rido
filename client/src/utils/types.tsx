@@ -6,7 +6,7 @@ interface CustomButtonProps {
     disabled?: boolean
 }
 
-interface PhoneInputProps {
+export interface PhoneInputProps {
     value: string;
     onChangeText: (text: string) => void;
     onFocus?: () => void;
