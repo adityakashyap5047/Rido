@@ -5,11 +5,22 @@ import { logout } from "./authService";
 
 export const refresh_token = async () => {
     try {
-        
-    } catch (error) {
+        const refreshToken = tokenStorage.getString('refresh_token');
+        const response = await axios.post(`${BASE_URL}/auth/refresh-token`, {
+            refresh_token: refreshToken,
+        });
+
+        const new_access_token = response.data.access_token;
+        const new_refresh_token = response.data.refresh_token;
+
+        tokenStorage.set('access_token', new_access_token);
+        tokenStorage.set('refresh_token', new_refresh_token);
+
+        return new_access_token;
+    } catch {
         console.error("REFRESH TOKEN ERROR");
         tokenStorage.clearAll();
-        logout()
+        logout();
     }
 }
 
