@@ -1,5 +1,5 @@
 import { View, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useUserStore } from '@/store/userStore'
 import { homeStyles } from '@/styles/homeStyles'
 import { StatusBar } from 'expo-status-bar'
@@ -32,6 +32,8 @@ const LocationSelection = () => {
     if (query.length > 4){
       const data = await getPlacesSuggestions(query);
       setLocations(data);
+    } else {
+      setLocations([]);
     }
   }
 
