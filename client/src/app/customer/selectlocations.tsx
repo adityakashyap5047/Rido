@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native'
+import { View, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native'
 import React, { useState } from 'react'
 import { useUserStore } from '@/store/userStore'
 import { homeStyles } from '@/styles/homeStyles'
@@ -13,6 +13,7 @@ import LocationInput from './LocationInput'
 import { getLatLong, getPlacesSuggestions } from '@/utils/mapUtils'
 import { locationStyles } from '@/styles/locationStyles'
 import LocationItem from './LocationItem'
+import MapPickerModal from './MapPickerModal'
 
 const LocationSelection = () => {
 
@@ -123,6 +124,39 @@ const LocationSelection = () => {
           }
         />
       </View>
+
+      {
+        isMapModalVisible && (
+          <MapPickerModal
+              selectLocation = {{
+                latitude: 
+                  focusedInput === 'drop' 
+                    ? dropCoords?.latitude
+                    : pickupCoords?.latitude,
+                longitude:
+                  focusedInput === 'drop' 
+                    ? dropCoords?.longitude
+                    : pickupCoords?.longitude,
+                address: focusedInput === 'drop' ? drop : pickup
+              }}
+              title={modalTitle}
+              visible={isMapModalVisible}
+              onClose={() => setIsMapModalVisible(false)}
+              onSelectLocation={(data) => {
+                if(data){
+                  if(modalTitle === 'drop'){
+                    setDrop(data?.address)
+                    setDropCoords(data)
+                  } else {
+                    setLocation(data)
+                    setPickupCoords(data)
+                    setPickup(data?.address)
+                  }
+                }
+              }}
+          />
+        )
+      }
     </View>
   )
 }

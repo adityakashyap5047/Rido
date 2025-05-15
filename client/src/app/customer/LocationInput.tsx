@@ -1,4 +1,4 @@
-import { View, Text, TextInputProps, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, TextInputProps, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import React, { FC } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
