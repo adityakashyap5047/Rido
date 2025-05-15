@@ -60,6 +60,13 @@ const SheetContent = () => {
                 ))
             }
         </View>
+
+        <View style={uiStyles.adSection}>
+            <Image 
+                source={require("@/assets/images/ad_banner.jpeg")}
+                style={uiStyles.adImage}
+            />
+        </View>
     </View>
   )
 }
