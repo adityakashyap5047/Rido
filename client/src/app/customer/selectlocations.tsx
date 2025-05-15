@@ -70,6 +70,13 @@ const LocationSelection = () => {
       setIsMapModalVisible(false)
     }
   }, [dropCoords, pickupCoords])
+
+  useEffect(() => {
+    if(location){
+      setPickupCoords(location);
+      setPickup(location?.address)
+    }
+  }, [location])
   
   const fetchLocation = async(query: string) => {
     if (query.length > 4){

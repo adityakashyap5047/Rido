@@ -234,6 +234,7 @@ const MapPickerModal: FC<MapPickerModalProps> = ({
                                     longitude: region?.longitude ?? 0,
                                     address: address
                                 })
+                                onClose();
                             }}
                         >
                             <Text style={modalStyles.buttonText}>Select {title} Location</Text>
