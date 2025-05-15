@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native'
 import React, { useState } from 'react'
 import { useUserStore } from '@/store/userStore'
 import { homeStyles } from '@/styles/homeStyles'
@@ -10,7 +10,8 @@ import { Colors } from '@/utils/Constants'
 import CustomText from '@/components/shared/CustomText'
 import { uiStyles } from '@/styles/uiStyles'
 import LocationInput from './LocationInput'
-import { getPlacesSuggestions } from '@/utils/mapUtils'
+import { getLatLong, getPlacesSuggestions } from '@/utils/mapUtils'
+import { locationStyles } from '@/styles/locationStyles'
 
 const LocationSelection = () => {
 
@@ -30,6 +31,26 @@ const LocationSelection = () => {
       const data = await getPlacesSuggestions(query);
       setLocations(data);
     }
+  }
+
+  const addLocation = async(id: string) => {
+    const data = await getLatLong(id);
+    if(data) {
+      if(focusedInput === 'drop'){
+        setDrop(data?.address)
+        setDropCoords(data)
+      } else {
+        setLocation(data)
+        setPickupCoords(data)
+        setPickup(data?.address)
+      }
+    }
+  }
+
+  const renderLocations = ({item}: any) => {
+    return (
+      <LocationItem item={item} onPress={() => addLocation(item?.place_id)} />
+    )
   }
 
   return (
@@ -68,6 +89,37 @@ const LocationSelection = () => {
             fetchLocation(text);
           }}
           onFocus={() => setFocusedInput("drop")}
+        />
+
+        <CustomText
+          fontFamily='Medium'
+          fontSize={10}
+          style={uiStyles.suggestionText}
+        >
+          {focusedInput} suggestions
+        </CustomText>
+
+        <FlatList
+          data={locations}
+          renderItem={renderLocations}
+          keyExtractor={(item: any) => item?.place_id}
+          initialNumToRender={5}
+          windowSize={5}
+          ListFooterComponent={
+            <TouchableOpacity
+              style={[commonStyles.flexRow, locationStyles.container]}
+              onPress={() => {
+                setModalTitle(focusedInput)
+                setIsMapModalVisible(true)
+              }} 
+            >
+              <Image
+                source={require('@/assets/icons/map_pin.png')}
+                style={uiStyles.mapPinIcon}
+              />
+              <CustomText fontFamily='Medium' fontSize={12}>Select From Map</CustomText>
+            </TouchableOpacity>
+          }
         />
       </View>
     </View>
