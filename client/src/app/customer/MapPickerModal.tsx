@@ -1,4 +1,4 @@
-import { View, Text, Modal, TouchableOpacity, TextInput, FlatList } from 'react-native'
+import { View, Text, Modal, TouchableOpacity, TextInput, FlatList, Image } from 'react-native'
 import React, { FC, memo, useEffect, useRef, useState } from 'react'
 import { modalStyles } from '@/styles/modalStyles';
 import MapView, { Region } from 'react-native-maps';
@@ -6,9 +6,10 @@ import { useUserStore } from '@/store/userStore';
 import { getLatLong, getPlacesSuggestions, reverseGeocode } from '@/utils/mapUtils';
 import LocationItem from './LocationItem';
 import * as Location from 'expo-location'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { customMapStyle, indiaIntialRegion } from '@/utils/CustomMap';
+import { mapStyles } from '@/styles/mapStyles';
 
 interface MapPickerModalProps {
     visible: boolean;
@@ -208,6 +209,22 @@ const MapPickerModal: FC<MapPickerModalProps> = ({
                         customMapStyle={customMapStyle}
                         showsUserLocation={true}
                     />
+                    <View style={mapStyles.centerMarkerContainer}>
+                        <Image
+                            source={title === 'pickup' ? require('@/assets/icons/marker.png') : require('@/assets/icons/drop_marker.png')}
+                            style={mapStyles.marker}
+                        />
+                    </View>
+                    <TouchableOpacity
+                        style={mapStyles.gpsButton}
+                        onPress={handleGpsButtonPress}
+                    >
+                        <MaterialCommunityIcons
+                            name='crosshairs-gps'
+                            size={RFValue(16)}
+                            color="#3C75BE"
+                        />
+                    </TouchableOpacity>
                 </View>            
             </>
         }
