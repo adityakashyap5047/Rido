@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { uiStyles } from '@/styles/uiStyles'
@@ -36,6 +36,29 @@ const SheetContent = () => {
                 </CustomText>
                 <Ionicons name='chevron-forward' size={RFValue(14)} color="black" />
             </TouchableOpacity>
+        </View>
+
+        <View style={uiStyles.cubes}>
+            {
+                cubes?.slice(0, 4).map((item, index) => (
+                    <TouchableOpacity 
+                        style={uiStyles.cubeContainer}
+                        key={index}
+                        onPress={() => router.navigate("/customer/selectlocations")}
+                    >
+                        <View style={uiStyles.cubeIconContainer}>
+                            <Image source={item?.imageUrl} style={uiStyles.cubeIcon} />
+                        </View>
+                        <CustomText
+                            fontFamily='Medium'
+                            fontSize={9.5}
+                            style={{textAlign: "center"}}
+                        >
+                            {item?.name}
+                        </CustomText>
+                    </TouchableOpacity>
+                ))
+            }
         </View>
     </View>
   )
