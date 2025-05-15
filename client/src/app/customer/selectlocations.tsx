@@ -10,6 +10,7 @@ import { Colors } from '@/utils/Constants'
 import CustomText from '@/components/shared/CustomText'
 import { uiStyles } from '@/styles/uiStyles'
 import LocationInput from './LocationInput'
+import { getPlacesSuggestions } from '@/utils/mapUtils'
 
 const LocationSelection = () => {
 
@@ -23,6 +24,13 @@ const LocationSelection = () => {
   const [focusedInput, setFocusedInput] = useState("drop")
   const [modalTitle, setModalTitle] = useState("drop")
   const [isMapModalVisible, setIsMapModalVisible] = useState(false)
+
+  const fetchLocation = async(query: string) => {
+    if (query.length > 4){
+      const data = await getPlacesSuggestions(query);
+      setLocations(data);
+    }
+  }
 
   return (
     <View style={homeStyles.container}>
