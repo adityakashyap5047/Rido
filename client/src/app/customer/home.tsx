@@ -42,7 +42,7 @@ const CustomerHome = () => {
         index={1}
         handleIndicatorStyle={{backgroundColor: "#ccc"}}
         enableOverDrag={false}
-        enableDynamicSizing
+        enableDynamicSizing={false}
         style={{zIndex: 4}}
         snapPoints={snapPoints}
         onChange={handleSheetChange}
