@@ -8,6 +8,7 @@ import LocationItem from './LocationItem';
 import * as Location from 'expo-location'
 import { Ionicons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { customMapStyle, indiaIntialRegion } from '@/utils/CustomMap';
 
 interface MapPickerModalProps {
     visible: boolean;
@@ -176,7 +177,39 @@ const MapPickerModal: FC<MapPickerModalProps> = ({
                 windowSize={5}
             />
         :
-                <></>
+            <>
+                <View style={{flex: 1, width: "100%"}}>
+                    <MapView
+                        ref={mapRef}
+                        maxZoomLevel={16}
+                        minZoomLevel={12}
+                        pitchEnabled={false}
+                        onRegionChangeComplete={handleRegionChangeComplete}
+                        style={{flex: 1}}
+                        initialRegion={{
+                            latitude:
+                                region?.latitude ??
+                                location?.latitude ??
+                                indiaIntialRegion?.latitude,
+                            longitude:
+                                region?.longitude ??
+                                location?.longitude ??
+                                indiaIntialRegion?.longitude,
+                            latitudeDelta: 0.5,
+                            longitudeDelta: 0.5
+                        }}
+                        provider='google'
+                        showsMyLocationButton={false}
+                        showsCompass={false}
+                        showsIndoors={false}
+                        showsIndoorLevelPicker={false}
+                        showsScale={false}
+                        showsBuildings={false}
+                        customMapStyle={customMapStyle}
+                        showsUserLocation={true}
+                    />
+                </View>            
+            </>
         }
     </Modal>
   )
