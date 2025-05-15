@@ -8,6 +8,8 @@ import { router } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '@/utils/Constants'
 import CustomText from '@/components/shared/CustomText'
+import { uiStyles } from '@/styles/uiStyles'
+import LocationInput from './LocationInput'
 
 const LocationSelection = () => {
 
@@ -36,6 +38,30 @@ const LocationSelection = () => {
           Back
         </CustomText>
       </TouchableOpacity>
+
+      <View style={uiStyles.locationInputs}>
+        <LocationInput
+          placeholder='Search a Pickup Location'
+          type='pickup'
+          value={pickup}
+          onChangeText={(text) => {
+            setPickup(text)
+            fetchLocation(text);
+          }}
+          onFocus={() => setFocusedInput("pickup")}
+        />
+
+        <LocationInput
+          placeholder='Search a Drop Location'
+          type='drop'
+          value={drop}
+          onChangeText={(text) => {
+            setDrop(text)
+            fetchLocation(text);
+          }}
+          onFocus={() => setFocusedInput("drop")}
+        />
+      </View>
     </View>
   )
 }
