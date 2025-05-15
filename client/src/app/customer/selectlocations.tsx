@@ -12,6 +12,7 @@ import { uiStyles } from '@/styles/uiStyles'
 import LocationInput from './LocationInput'
 import { getLatLong, getPlacesSuggestions } from '@/utils/mapUtils'
 import { locationStyles } from '@/styles/locationStyles'
+import LocationItem from './LocationItem'
 
 const LocationSelection = () => {
 
