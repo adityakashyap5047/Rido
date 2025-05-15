@@ -1,4 +1,4 @@
-import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Modal, TouchableOpacity, TextInput, FlatList } from 'react-native'
 import React, { FC, memo, useEffect, useRef, useState } from 'react'
 import { modalStyles } from '@/styles/modalStyles';
 import MapView, { Region } from 'react-native-maps';
@@ -159,6 +159,25 @@ const MapPickerModal: FC<MapPickerModalProps> = ({
                 />
             </View>
         </View>
+
+        {text !== '' ?
+            <FlatList
+                ListHeaderComponent={
+                    <View>
+                        {text.length > 4 ? null : (
+                            <Text style={{marginHorizontal: 16}}>Enter at least 4 Characters to search</Text>
+                        )}
+                    </View>
+                }
+                data={locations}
+                renderItem={renderLocations}
+                keyExtractor={(item: any) => item?.place_id}
+                initialNumToRender={5}
+                windowSize={5}
+            />
+        :
+                <></>
+        }
     </Modal>
   )
 }
