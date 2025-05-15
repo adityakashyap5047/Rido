@@ -57,32 +57,32 @@ const DraggableMap: FC<{height: number}> = ({ height }) => {
     }, [isFocused, mapRef])
 
     // REAL TIME MARKERS
-    useEffect(() => {
+    // useEffect(() => {
       
-        if(location?.latitude && location?.longitude && isFocused){
-            emit('subscribeToZone', {
-                latitude: location.latitude,
-                longitude: location.longitude
-            })
+    //     if(location?.latitude && location?.longitude && isFocused){
+    //         emit('subscribeToZone', {
+    //             latitude: location.latitude,
+    //             longitude: location.longitude
+    //         })
 
-            on('nearbyRiders', (riders: any[]) => {
-                const updatedMarkers = riders.map((rider) => ({
-                    id: rider.id,
-                    latitude: rider.coords.latitude,
-                    longitude: rider.coords.longitude,
-                    type: "rider",
-                    rotation: rider.coords.heading,
-                    visible: true,
-                }));
-                setMarkers(updatedMarkers)
-            })
-        }
+    //         on('nearbyRiders', (riders: any[]) => {
+    //             const updatedMarkers = riders.map((rider) => ({
+    //                 id: rider.id,
+    //                 latitude: rider.coords.latitude,
+    //                 longitude: rider.coords.longitude,
+    //                 type: "rider",
+    //                 rotation: rider.coords.heading,
+    //                 visible: true,
+    //             }));
+    //             setMarkers(updatedMarkers)
+    //         })
+    //     }
 
-        return () => {
-            off("nearbyRiders")
-        }
+    //     return () => {
+    //         off("nearbyRiders")
+    //     }
 
-    }, [location, emit, on, off, isFocused])
+    // }, [location, emit, on, off, isFocused])
     
 
     // SIMULATING THE RANDOM CUSTOM MARKERS
