@@ -10,7 +10,7 @@ import { Colors } from '@/utils/Constants'
 import CustomText from '@/components/shared/CustomText'
 import { uiStyles } from '@/styles/uiStyles'
 import LocationInput from './LocationInput'
-import { getLatLong, getPlacesSuggestions } from '@/utils/mapUtils'
+import { calculateDistance, getLatLong, getPlacesSuggestions } from '@/utils/mapUtils'
 import { locationStyles } from '@/styles/locationStyles'
 import LocationItem from './LocationItem'
 import MapPickerModal from './MapPickerModal'
@@ -28,6 +28,49 @@ const LocationSelection = () => {
   const [modalTitle, setModalTitle] = useState("drop")
   const [isMapModalVisible, setIsMapModalVisible] = useState(false)
 
+  const checkDistance = async() => {
+    if (!pickupCoords || !dropCoords) return;
+
+    const {latitude: lat1, longitude: lon1} = pickupCoords
+    const {latitude: lat2, longitude: lon2} = dropCoords
+
+    if (lat1 == lat2 && lon1 == lon2){
+      alert("Pickup and Drop locations cannot be the same. Please select different locations.")
+    }
+
+    const minDistance = 0.5 
+    const maxDistance = 50
+
+    const distance = calculateDistance(lat1, lon1, lat2, lon2)
+
+    if(distance < minDistance){
+      alert("The selected locations are too close. Please select different locations.")
+    } else if(distance > maxDistance){
+      alert("The selected locations are too far apart. Please select different locations.")
+    } else {
+      setLocations([])
+      router.navigate({
+        pathname: "/customer/rideBooking",
+        params: {
+          distanceInKM: distance.toFixed(2),
+          drop_latitude: dropCoords?.latitude,
+          drop_longitude: dropCoords?.longitude,
+          drop_address: drop,
+        }
+      })
+    }
+
+  }
+
+  useEffect(() => {
+    if(dropCoords && pickupCoords){
+      checkDistance()
+    } else {
+      setLocations([])
+      setIsMapModalVisible(false)
+    }
+  }, [dropCoords, pickupCoords])
+  
   const fetchLocation = async(query: string) => {
     if (query.length > 4){
       const data = await getPlacesSuggestions(query);

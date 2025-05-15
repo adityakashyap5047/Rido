@@ -20,11 +20,7 @@ interface MapPickerModalProps {
         longitude: number;
         address: string;
     };
-    onSelectLocation: (data: {
-        latitude: number;
-        longitude: number;
-        address: string;
-    }) => void;
+    onSelectLocation: (location: any) => void;
 }
 
 const MapPickerModal: FC<MapPickerModalProps> = ({
@@ -160,7 +156,6 @@ const MapPickerModal: FC<MapPickerModalProps> = ({
                     }}
                 />
             </View>
-        </View>
 
         {text !== '' ?
             <FlatList
@@ -225,9 +220,29 @@ const MapPickerModal: FC<MapPickerModalProps> = ({
                             color="#3C75BE"
                         />
                     </TouchableOpacity>
-                </View>            
+                </View>           
+
+                <View style={modalStyles.footerContainer}>
+                    <Text style={modalStyles.addressText} numberOfLines={2}>{address === "" ? "Getting address ..." : address}</Text>
+                    <View style={modalStyles.buttonContainer}>
+                        <TouchableOpacity
+                            style={modalStyles.button}
+                            onPress={() => {
+                                onSelectLocation({
+                                    type: title,
+                                    latitude: region?.latitude ?? 0,
+                                    longitude: region?.longitude ?? 0,
+                                    address: address
+                                })
+                            }}
+                        >
+                            <Text style={modalStyles.buttonText}>Select {title} Location</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View> 
             </>
         }
+        </View>
     </Modal>
   )
 }
