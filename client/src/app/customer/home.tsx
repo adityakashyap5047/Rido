@@ -7,7 +7,7 @@ import { screenHeight } from '@/utils/Constants'
 import DraggableMap from '@/components/customer/DraggableMap'
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet'
 import SheetContent from '../../components/customer/SheetContent'
-import RideBooking from '@/components/customer/RideBooking'
+import RideBooking from '@/app/customer/RideBooking'
 
 const androidHeights = [screenHeight * 0.12, screenHeight * 0.42, screenHeight * 0.8]
 const iosHeights = [screenHeight * 0.2, screenHeight * 0.5, screenHeight * 0.8]

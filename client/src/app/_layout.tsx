@@ -10,7 +10,7 @@ const Layout = () => {
         <Stack.Screen name="index"/>
         <Stack.Screen name="role"/>
         <Stack.Screen name="customer/selectlocations"/>
-        <Stack.Screen name="customer/rideBooking"/>
+        <Stack.Screen name="customer/RideBooking"/>
         <Stack.Screen name="customer/home"/>
         <Stack.Screen name="customer/auth"/>
         <Stack.Screen name="rider/auth"/>

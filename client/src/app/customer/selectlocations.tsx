@@ -13,7 +13,8 @@ import LocationInput from '../../components/customer/LocationInput'
 import { calculateDistance, getLatLong, getPlacesSuggestions } from '@/utils/mapUtils'
 import { locationStyles } from '@/styles/locationStyles'
 import LocationItem from '../../components/customer/LocationItem'
-import MapPickerModal from './MapPickerModal'
+import MapPickerModal from '@/components/customer/MapPickerModal'
+
 
 const LocationSelection = () => {
 
@@ -50,7 +51,7 @@ const LocationSelection = () => {
     } else {
       setLocations([])
       router.navigate({
-        pathname: "/customer/rideBooking",
+        pathname: "/customer/RideBooking",
         params: {
           distanceInKm: distance.toFixed(2),
           drop_latitude: dropCoords?.latitude,
