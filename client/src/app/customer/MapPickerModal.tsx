@@ -4,7 +4,7 @@ import { modalStyles } from '@/styles/modalStyles';
 import MapView, { Region } from 'react-native-maps';
 import { useUserStore } from '@/store/userStore';
 import { getLatLong, getPlacesSuggestions, reverseGeocode } from '@/utils/mapUtils';
-import LocationItem from './LocationItem';
+import LocationItem from '../../components/customer/LocationItem';
 import * as Location from 'expo-location'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';

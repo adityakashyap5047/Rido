@@ -9,10 +9,10 @@ import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '@/utils/Constants'
 import CustomText from '@/components/shared/CustomText'
 import { uiStyles } from '@/styles/uiStyles'
-import LocationInput from './LocationInput'
+import LocationInput from '../../components/customer/LocationInput'
 import { calculateDistance, getLatLong, getPlacesSuggestions } from '@/utils/mapUtils'
 import { locationStyles } from '@/styles/locationStyles'
-import LocationItem from './LocationItem'
+import LocationItem from '../../components/customer/LocationItem'
 import MapPickerModal from './MapPickerModal'
 
 const LocationSelection = () => {
@@ -34,7 +34,7 @@ const LocationSelection = () => {
     const {latitude: lat1, longitude: lon1} = pickupCoords
     const {latitude: lat2, longitude: lon2} = dropCoords
 
-    if (lat1 == lat2 && lon1 == lon2){
+    if (lat1 === lat2 && lon1 === lon2){
       alert("Pickup and Drop locations cannot be the same. Please select different locations.")
     }
 
