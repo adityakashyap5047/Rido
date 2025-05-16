@@ -7,6 +7,7 @@ import { screenHeight } from '@/utils/Constants'
 import DraggableMap from '@/components/customer/DraggableMap'
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet'
 import SheetContent from './SheetContent'
+import RideBooking from './rideBooking'
 
 const androidHeights = [screenHeight * 0.12, screenHeight * 0.42, screenHeight * 0.8]
 const iosHeights = [screenHeight * 0.2, screenHeight * 0.5, screenHeight * 0.8]
@@ -27,31 +28,32 @@ const CustomerHome = () => {
   }, [])
 
   return (
-    <View style={homeStyles.container}>
-      <StatusBar
-        style='light'
-        backgroundColor='orange'
-        translucent={false}
-      />
-      <LocationBar/>
+    // <View style={homeStyles.container}>
+    //   <StatusBar
+    //     style='light'
+    //     backgroundColor='orange'
+    //     translucent={false}
+    //   />
+    //   <LocationBar/>
 
-      <DraggableMap height={mapHeight}/>
+    //   <DraggableMap height={mapHeight}/>
 
-      <BottomSheet 
-        ref={bottomSheetRef}
-        index={1}
-        handleIndicatorStyle={{backgroundColor: "#ccc"}}
-        enableOverDrag={false}
-        enableDynamicSizing={false}
-        style={{zIndex: 4}}
-        snapPoints={snapPoints}
-        onChange={handleSheetChange}
-      >
-        <BottomSheetScrollView contentContainerStyle={homeStyles.scrollContainer}>
-          <SheetContent />
-        </BottomSheetScrollView>
-      </BottomSheet>
-    </View>
+    //   <BottomSheet 
+    //     ref={bottomSheetRef}
+    //     index={1}
+    //     handleIndicatorStyle={{backgroundColor: "#ccc"}}
+    //     enableOverDrag={false}
+    //     enableDynamicSizing={false}
+    //     style={{zIndex: 4}}
+    //     snapPoints={snapPoints}
+    //     onChange={handleSheetChange}
+    //   >
+    //     <BottomSheetScrollView contentContainerStyle={homeStyles.scrollContainer}>
+    //       <SheetContent />
+    //     </BottomSheetScrollView>
+    //   </BottomSheet>
+    // </View>
+    <RideBooking/>
   )
 }
 
