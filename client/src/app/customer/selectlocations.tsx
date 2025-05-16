@@ -52,7 +52,7 @@ const LocationSelection = () => {
       router.navigate({
         pathname: "/customer/rideBooking",
         params: {
-          distanceInKM: distance.toFixed(2),
+          distanceInKm: distance.toFixed(2),
           drop_latitude: dropCoords?.latitude,
           drop_longitude: dropCoords?.longitude,
           drop_address: drop,

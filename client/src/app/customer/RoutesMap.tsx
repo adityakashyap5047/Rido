@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, TouchableOpacity, Image } from 'react-native'
 import React, { FC, memo, useEffect, useRef } from 'react'
 import MapView, { Marker } from 'react-native-maps';
 import { customMapStyle, indiaIntialRegion } from '@/utils/CustomMap';
@@ -42,7 +42,7 @@ const RoutesMap: FC<{drop: any; pickup: any}> = ({drop, pickup}) => {
                 },
                 animated: true,
             });
-        } catch(error) {
+        } catch{
             console.log("Error fitting to markers: ")
         }
     }
