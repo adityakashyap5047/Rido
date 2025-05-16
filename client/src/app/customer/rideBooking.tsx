@@ -9,9 +9,10 @@ import RoutesMap from './RoutesMap'
 import CustomText from '@/components/shared/CustomText'
 import { ScrollView } from 'react-native-gesture-handler'
 import { router } from 'expo-router'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { commonStyles } from '@/styles/commonStyles'
+import CustomButton from '@/components/shared/CustomButton'
 
 const RideBooking = () => {
 
@@ -122,6 +123,58 @@ const RideBooking = () => {
           color="black"
         />
       </TouchableOpacity>
+
+      <View style={rideStyles.bookingContainer}>
+
+        <View style={commonStyles.flexRowBetween}>
+          <View
+            style={[
+              rideStyles.couponContainer,
+              {borderRightWidth: 1, borderRightColor: '#ccc'},
+            ]}
+          >
+            <Image
+              source={require('@/assets/icons/rupee.png')}
+              style={rideStyles?.icon}
+            />
+            <View>
+              <CustomText fontFamily='Medium' fontSize={12}>
+                Cash
+              </CustomText>
+              <CustomText fontFamily='Medium' fontSize={10} style={{opacity: 0.7}}>
+                Far: {item?.distanceInKm || 0} km
+              </CustomText>
+            </View>
+            <Ionicons name='chevron-forward' size={RFValue(14)} color='#777'/>
+          </View>
+          <View
+            style={[
+              rideStyles.couponContainer
+            ]}
+          >
+            <Image
+              source={require('@/assets/icons/coupon.png')}
+              style={rideStyles?.icon}
+            />
+            <View>
+              <CustomText fontFamily='Medium' fontSize={12}>
+                New
+              </CustomText>
+              <CustomText fontFamily='Medium' fontSize={10} style={{opacity: 0.7}}>
+                Coupon Applied
+              </CustomText>
+            </View>
+            <Ionicons name='chevron-forward' size={RFValue(14)} color='#777'/>
+          </View>
+        </View>
+
+        <CustomButton
+          title='Book Ride'
+          disabled={loading}
+          loading={loading}
+          onPress={handleRideBooking}
+        />
+      </View>
     </View>
   )
 }
