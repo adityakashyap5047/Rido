@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { appAxios } from "./apiInterceptors";
 import { Alert } from "react-native";
+import { resetAndNavigate } from "@/utils/Helpers";
 
 interface coords{
     address: string,
@@ -44,5 +45,29 @@ export const getMyRides = async(isCustomer: boolean = true) => {
     } catch(error: any){
         Alert.alert("Oh! Dang there was an error");
         console.log("Error: GET MY Ride", error)
+    }
+}
+
+export const acceptRideOffer = async(rideId: string) => {
+    try{
+        await appAxios.patch(`/ride/accept/${rideId}`)
+        resetAndNavigate({
+            pathname: "/rider/liveride",
+            params: {id: rideId}
+        })
+    } catch(error: any){
+        Alert.alert("Oh! Dang there was an error");
+        console.log(error)
+    }
+}
+
+export const updateRideStatus = async(rideId: string, status: string) => {
+    try {
+        await appAxios.patch(`/ride/update/${rideId}`, { status })
+        return true;
+    } catch(error: any){
+        Alert.alert("Oh! Dang there was an error");
+        console.log(error)
+        return false;
     }
 }
