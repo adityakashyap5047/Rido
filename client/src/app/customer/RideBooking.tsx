@@ -13,6 +13,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { commonStyles } from '@/styles/commonStyles'
 import CustomButton from '@/components/shared/CustomButton'
+import { createRide } from '@/service/rideService'
 
 const RideBooking = () => {
 
@@ -70,6 +71,27 @@ const RideBooking = () => {
 
     const handleRideBooking = async() => {
       setLoading(true)
+      
+      await createRide({
+        vehcile:
+          selectedOption == "Cab Economy"
+            ? "cabEconomy"
+            : selectedOption == "Cab Premium"
+            ? "cabPremium"
+            : selectedOption === "Bike"
+            ? "bike"
+            : "auto",
+        drop: {
+          latitude: parseFloat(item.drop_latitude),
+          longitude: parseFloat(item.drop_longitude),
+          address: item?.drop_address
+        },
+        pickup: {
+          latitude: parseFloat(location.latitude),
+          longitude: parseFloat(location.longitude),
+          address: location.address
+        }
+      });
       
       setLoading(false)
     }
